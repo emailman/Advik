@@ -8,9 +8,10 @@ from guizero import *
 
 def main():
     def add_name():
-        customers.append(tbx_name.value)
-        tbx_name.clear()
-        show_names()
+        if tbx_name.value:
+            customers.append(tbx_name.value)
+            tbx_name.clear()
+            show_names()
 
     def show_names():
         lbx_names.clear()
@@ -22,19 +23,25 @@ def main():
             customer = customers.pop(0)
             info(title='Customer Service', text=f"Now serving {customer}")
             show_names()
+        else:
+            info(title="Customer Service", text="No customers to serve")
+
+    def key_pressed(clicked):
+        if  clicked.key == "\r":
+            add_name()
 
     customers = []
     app = App("Customer Waiting List")
     app.text_size = 14
 
-    Text(app, "Enter Your Name Below")
+    Text(app, "Enter Your Name Below, then <enter>", size="12")
     tbx_name = TextBox(app, width="20")
-
-    PushButton(app, text="Click to Add Your Name", command=add_name)
+    tbx_name.when_key_pressed = key_pressed
 
     lbx_names = ListBox(app)
 
-    PushButton(app, text="Click to Service Next Customer", command=service_customer)
+    PushButton(app, text="Click to Service Next Customer",
+               command=service_customer)
 
     app.display()
 
