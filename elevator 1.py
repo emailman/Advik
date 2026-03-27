@@ -30,11 +30,12 @@ def main():
 
     for floor in range(6, 0, -1):
         # Create button objects and store them in a set
-        btn = PushButton(button_box, text=str(floor), command=floor_button_pressed,
-                         args=[floor])
+        btn = PushButton(button_box, text=str(floor),
+                         command=floor_button_pressed, args=[floor])
         buttons[floor] = btn
         Box(button_box, width=10, height=10, border=False)  # Spacer
 
+    # Pushbutton to clear all selected floors
     Box(app, width=10, height=40, align='bottom', border=False)  # Spacer
     PushButton(app, text="CLEAR", align='bottom', command=clear_buttons)
 
