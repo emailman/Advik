@@ -4,7 +4,7 @@ Floor buttons for an elevator
 
 from guizero import App, Box, PushButton, Text
 
-buttons = {}  # Set of pushbutton widgets
+buttons = {}  # Dictionary of pushbutton widgets
 
 
 def main():
@@ -29,7 +29,7 @@ def main():
     Text(button_box, text="Floors")
 
     for floor in range(6, 0, -1):
-        # Create button objects and store them in a set
+        # Create button objects and store them in a dictionary
         btn = PushButton(button_box, text=str(floor),
                          command=floor_button_pressed, args=[floor])
         buttons[floor] = btn
