@@ -92,7 +92,8 @@ def main():
             submit_guess()
 
     # Build UI
-    app = App(title="Wordle", width=360, height=500, bg="#ffffff")
+    app = App(title="Wordle", width=360, height=550, bg="#ffffff")
+    app.text_size = 14
 
     Text(app, text="WORDLE", size=24, font="Arial",
          bold=True, color="#000000")
