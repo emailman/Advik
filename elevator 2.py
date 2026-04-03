@@ -14,8 +14,8 @@ SHAFT_BOTTOM = SHAFT_TOP + FLOOR_COUNT * FLOOR_HEIGHT
 
 BORDER = 2  # outline width in pixels
 
-ANIM_STEPS = 20
-ANIM_DELAY = 20  # ms per frame
+ANIM_STEPS = 30
+ANIM_DELAY = 10  # ms per frame
 
 
 def floor_top(floor):
@@ -25,14 +25,6 @@ def floor_top(floor):
 
 
 def main():
-    state = {"floor": 1, "animating": False}
-
-    app = App(title="Elevator Shaft", width=450, height=650, bg="white")
-    app.text_size = 14
-    app.text_bold = True
-
-    d = Drawing(app, width=450, height=550)
-
     def draw_scene(car_y_top):
         d.clear()
 
@@ -64,10 +56,13 @@ def main():
                    color="black", width=BORDER)
 
         # --- elevator car (yellow fill + bold outline) ---
-        margin = 20
-        car_left = SHAFT_LEFT + margin
-        car_right = SHAFT_RIGHT - margin
-        car_bottom = car_y_top + FLOOR_HEIGHT - 10
+        side_margin = 20
+        car_left = SHAFT_LEFT + side_margin
+        car_right = SHAFT_RIGHT - side_margin
+
+        top_margin = 10
+        car_bottom = car_y_top + FLOOR_HEIGHT - top_margin
+
         d.rectangle(car_left, car_y_top, car_right, car_bottom,
                     color="yellow", outline=False)
         d.line(car_left, car_y_top, car_right, car_y_top,
@@ -80,6 +75,7 @@ def main():
                color="black", width=BORDER)
 
     def animate_step(start_y, end_y, step):
+        """ Event handler to animate cab motion """
         t = step / ANIM_STEPS
         current_y = int(start_y + (end_y - start_y) * t)
         draw_scene(current_y)
@@ -90,6 +86,7 @@ def main():
             state["animating"] = False
 
     def go_up():
+        """ Event handler to go up one floor """
         if state["animating"] or state["floor"] >= FLOOR_COUNT:
             return
         state["animating"] = True
@@ -100,6 +97,7 @@ def main():
         animate_step(start_y, end_y, 1)
 
     def go_down():
+        """ Event handler to go down one floor """
         if state["animating"] or state["floor"] <= 1:
             return
         state["animating"] = True
@@ -109,10 +107,20 @@ def main():
         end_y = floor_top(state["floor"]) + 10
         animate_step(start_y, end_y, 1)
 
+    app = App(title="Elevator Shaft and Cab",
+              width=450, height=650, bg="white")
+    app.text_size = 14
+    app.text_bold = True
+
+    d = Drawing(app, width=450, height=550)
+
+    state = {"floor": 1, "animating": False}
+
     # Initial draw
     draw_scene(floor_top(1) + 10)
 
-    Box(app, height=20, width=20, align="bottom")
+    # UP/DOWN buttons at the bottom of the screen
+    Box(app, height=20, width=20, align="bottom")  # Spacer
     button_box = Box(app, height=50, width=300,
                      align="bottom", border=False)
 

@@ -7,19 +7,20 @@ from guizero import App, Box, PushButton, Text
 buttons = {}  # Dictionary of pushbutton widgets
 
 
+def floor_button_pressed(floor):
+    """ Function called when the floor button is pressed """
+    print(f"Floor {floor} button pressed")
+    buttons[floor].bg = "yellow"
+
+
+def clear_buttons():
+    """ Clear all buttons pressed """
+    for button in buttons.values():
+        button.bg = None
+
+
 def main():
-
-    def floor_button_pressed(_floor):
-        """ Function called when the floor button is pressed """
-        print(f"Floor {_floor} button pressed")
-        buttons[_floor].bg = "yellow"
-
-    def clear_buttons():
-        """ Clear all buttons pressed """
-        for _btn in buttons.values():
-            _btn.bg = None
-
-    app = App(title="Elevator", width=300, height=650, bg="#ffffff")
+    app = App(title="Elevator Buttons", width=300, height=650, bg="#ffffff")
     app.text_size = 14
     app.text_bold = True
 
@@ -35,7 +36,7 @@ def main():
         buttons[floor] = btn
         Box(button_box, width=10, height=10, border=False)  # Spacer
 
-    # Pushbutton to clear all selected floors
+    # Pushbutton to clear all floors
     Box(app, width=10, height=40, align='bottom', border=False)  # Spacer
     PushButton(app, text="CLEAR", align='bottom', command=clear_buttons)
 
