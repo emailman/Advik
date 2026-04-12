@@ -23,9 +23,11 @@ GREY = (200, 200, 200)
 
 def floor_top(floor):
     """
-    y-coordinate of the top edge of the given floor
-    (1=bottom, 6=top)
+    Given a floor number, return the floor top position
+    :param floor: 1=bottom, 6=top
+    :return: y-coordinate of the top edge of the given floor
     """
+
     return SHAFT_TOP + (FLOOR_COUNT - floor) * FLOOR_HEIGHT
 
 
@@ -143,8 +145,8 @@ def main():
     d = Drawing(app, width=370, height=580, align="left")
 
     # Floor-button panel (right side)
-    button_box = Box(app, width=140, height=510, border=True, align="left")
-    Box(button_box, width=10, height=28, border=False)  # spacer
+    button_box = Box(app, width=140, height=550, border=True, align="left")
+    Box(button_box, width=10, height=40, border=False)  # spacer
 
     for floor in range(FLOOR_COUNT, 0, -1):
         btn = PushButton(button_box, text=str(floor),
